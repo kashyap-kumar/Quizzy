@@ -16,6 +16,17 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'subject_id' => 'required|exists:subjects,id',
+            'question_text' => 'required|string',
+            'question_image' => 'nullable|image|max:2048',
+            'options' => 'required|array|size:4',
+            'options.*.text' => 'required|string',
+            'options.*.image' => 'nullable|image|max:2048',
+            'correct_answers' => 'required|array|min:1',
+            'correct_answers.*' => 'required|integer|min:0|max:3'
+        ]);
+
         $question = Question::create([
             'subject_id' => $request->subject_id,
             'question_text' => $request->question_text,
@@ -28,11 +39,11 @@ class AdminController extends Controller
                 'option_text' => $option['text'],
                 'option_image' => isset($option['image']) ? 
                     $option['image']->store('options', 'public') : null,
-                'is_correct' => $request->correct_answer == $index
+                'is_correct' => in_array($index, $request->correct_answers)
             ]);
         }
 
-        return redirect()->route('admin.create');
+        return redirect()->route('admin.create')->with('success', 'Question created successfully!');
     }
 
     public function createSubject()

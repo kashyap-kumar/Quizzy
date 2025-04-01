@@ -19,11 +19,16 @@
                         
                         <form method="POST" action="{{ route('quiz.answer') }}">
                             @csrf
+                            @php
+                                $correctAnswersCount = $question->options()->where('is_correct', true)->count();
+                                $inputType = $correctAnswersCount === 1 ? 'radio' : 'checkbox';
+                                $inputName = $correctAnswersCount === 1 ? 'answer' : 'answers[]';
+                            @endphp
                             @foreach($question->options as $option)
                                 <div class="mb-4">
                                     <label class="flex items-center p-4 border rounded-lg hover:bg-gray-50 cursor-pointer">
-                                        <input type="radio" name="answer" value="{{ $option->id }}" required
-                                            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
+                                        <input type="{{ $inputType }}" name="{{ $inputName }}" value="{{ $option->id }}"
+                                            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
                                         <span class="ml-3">
                                             @if($option->option_image)
                                                 <img src="{{ asset('storage/'.$option->option_image) }}" class="max-w-full h-auto mb-2">

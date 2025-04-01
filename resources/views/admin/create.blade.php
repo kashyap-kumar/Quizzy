@@ -56,9 +56,9 @@
                             @for ($i = 0; $i < 4; $i++)
                                 <div class="mb-4 p-4 border rounded-md">
                                     <div class="flex items-center mb-2">
-                                        <input type="radio" name="correct_answer" value="{{ $i }}" required
-                                            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300"
-                                            {{ old('correct_answer') == $i ? 'checked' : '' }}>
+                                        <input type="checkbox" name="correct_answers[]" value="{{ $i }}"
+                                            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                                            {{ in_array($i, old('correct_answers', [])) ? 'checked' : '' }}>
                                         <label class="ml-2 block text-sm font-medium text-gray-700">Correct Answer</label>
                                     </div>
                                     <div class="mb-2">
@@ -77,7 +77,7 @@
                             @error('options')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
-                            @error('correct_answer')
+                            @error('correct_answers')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>

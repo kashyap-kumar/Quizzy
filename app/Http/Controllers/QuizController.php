@@ -38,7 +38,17 @@ class QuizController extends Controller
     {
         $quiz = session('quiz');
         $question = $quiz['questions'][$quiz['current']];
-        $isCorrect = $question->options()->where('id', $request->answer)->first()->is_correct;
+        
+        // Get all correct options for this question
+        $correctOptions = $question->options()->where('is_correct', true)->pluck('id')->toArray();
+        
+        // Get user's selected answers
+        $selectedAnswers = $request->has('answer') ? [$request->answer] : $request->input('answers', []);
+        
+        // Check if the number of selected answers matches the number of correct options
+        // and if all selected answers are correct
+        $isCorrect = count($selectedAnswers) === count($correctOptions) && 
+                    empty(array_diff($selectedAnswers, $correctOptions));
 
         if ($isCorrect) {
             $question->increment('correct_count');
