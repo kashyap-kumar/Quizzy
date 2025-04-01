@@ -11,6 +11,10 @@ Route::get('/', function () {
 Route::prefix('admin')->group(function () {
     Route::get('/questions/create', [AdminController::class, 'create'])->name('admin.create');
     Route::post('/questions', [AdminController::class, 'store'])->name('admin.store');
+    Route::get('/questions', [AdminController::class, 'index'])->name('admin.questions.index');
+    Route::get('/questions/{question}/edit', [AdminController::class, 'edit'])->name('admin.questions.edit');
+    Route::put('/questions/{question}', [AdminController::class, 'update'])->name('admin.questions.update');
+    Route::delete('/questions/{question}', [AdminController::class, 'destroy'])->name('admin.questions.destroy');
     Route::get('/subjects/create', [AdminController::class, 'createSubject'])->name('admin.subjects.create');
     Route::post('/subjects', [AdminController::class, 'storeSubject'])->name('admin.subjects.store');
 });

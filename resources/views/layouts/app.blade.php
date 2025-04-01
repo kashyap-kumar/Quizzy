@@ -32,6 +32,9 @@
                             <x-nav-link :href="route('quiz.select-subject')" :active="request()->routeIs('quiz.select-subject')">
                                 {{ __('Take Quiz') }}
                             </x-nav-link>
+                            <x-nav-link :href="route('admin.questions.index')" :active="request()->routeIs('admin.questions.index')">
+                                {{ __('Questions') }}
+                            </x-nav-link>
                             <x-nav-link :href="route('admin.create')" :active="request()->routeIs('admin.create')">
                                 {{ __('Create Question') }}
                             </x-nav-link>
