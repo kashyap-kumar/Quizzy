@@ -11,10 +11,12 @@
                 <div class="p-6 text-gray-900">
                     <div class="mb-8">
                         <h3 class="text-lg font-semibold">
-                            @if($question->question_image)
-                                <img src="{{ asset('storage/'.$question->question_image) }}" class="max-w-full h-auto mb-4">
-                            @endif
                             {{ $question->question_text }}
+                            @if($question->question_image)
+                                <div class="mt-4">
+                                    <img src="{{ asset('storage/'.$question->question_image) }}" class="max-w-full h-auto rounded-lg shadow-sm">
+                                </div>
+                            @endif
                         </h3>
                         
                         <form method="POST" action="{{ route('quiz.answer') }}">
@@ -30,10 +32,12 @@
                                         <input type="{{ $inputType }}" name="{{ $inputName }}" value="{{ $option->id }}"
                                             class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
                                         <span class="ml-3">
-                                            @if($option->option_image)
-                                                <img src="{{ asset('storage/'.$option->option_image) }}" class="max-w-full h-auto mb-2">
-                                            @endif
                                             {{ $option->option_text }}
+                                            @if($option->option_image)
+                                                <div class="mt-2">
+                                                    <img src="{{ asset('storage/'.$option->option_image) }}" class="max-w-full h-auto rounded-lg shadow-sm">
+                                                </div>
+                                            @endif
                                         </span>
                                     </label>
                                 </div>

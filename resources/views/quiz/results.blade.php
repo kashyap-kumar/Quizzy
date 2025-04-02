@@ -12,19 +12,21 @@
                     @foreach(session('quiz.questions') as $index => $question)
                         <div class="mb-8">
                             <h3 class="text-lg font-semibold">
+                                {{ $question->question_text }}
                                 @if($question->question_image)
-                                    <img src="{{ asset('storage/'.$question->question_image) }}" class="max-w-full h-auto">
-                                @else
-                                    {{ $question->question_text }}
+                                    <div class="mt-4">
+                                        <img src="{{ asset('storage/'.$question->question_image) }}" class="max-w-full h-auto rounded-lg shadow-sm">
+                                    </div>
                                 @endif
                             </h3>
                             
                             @foreach($question->options as $option)
                                 <div class="@if($option->is_correct) bg-green-100 @elseif(!$option->is_correct && session('quiz.answers')[$index] === false) bg-red-100 @endif p-3 my-2 rounded">
+                                    {{ $option->option_text }}
                                     @if($option->option_image)
-                                        <img src="{{ asset('storage/'.$option->option_image) }}">
-                                    @else
-                                        {{ $option->option_text }}
+                                        <div class="mt-2">
+                                            <img src="{{ asset('storage/'.$option->option_image) }}" class="max-w-full h-auto rounded-lg shadow-sm">
+                                        </div>
                                     @endif
                                 </div>
                             @endforeach

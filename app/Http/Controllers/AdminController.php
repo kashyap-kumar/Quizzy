@@ -60,10 +60,20 @@ class AdminController extends Controller
         return redirect()->route('admin.subjects.create');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $questions = Question::with(['subject', 'options'])->latest()->get();
-        return view('admin.questions.index', compact('questions'));
+        $subjects = Subject::all();
+        $selectedSubject = $request->get('subject_id');
+        
+        $query = Question::with(['subject', 'options']);
+        
+        if ($selectedSubject) {
+            $query->where('subject_id', $selectedSubject);
+        }
+        
+        $questions = $query->latest()->get();
+        
+        return view('admin.questions.index', compact('questions', 'subjects', 'selectedSubject'));
     }
 
     public function edit(Question $question)

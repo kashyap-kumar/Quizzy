@@ -45,11 +45,11 @@
 
                         <div class="mb-4">
                             <label for="question_image" class="block text-sm font-medium text-gray-700">Question Image (Optional)</label>
-                            @if($question->question_image)
-                                <div class="mb-2">
+                            <div id="question_image_preview" class="mb-2">
+                                @if($question->question_image)
                                     <img src="{{ asset('storage/'.$question->question_image) }}" class="max-w-xs">
-                                </div>
-                            @endif
+                                @endif
+                            </div>
                             <input type="file" name="question_image" id="question_image" accept="image/*"
                                 class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
                             @error('question_image')
@@ -79,12 +79,12 @@
                                     </div>
                                     <div class="mb-2">
                                         <label class="block text-sm font-medium text-gray-700">Option Image (Optional)</label>
-                                        @if($option->option_image)
-                                            <div class="mb-2">
+                                        <div id="options_{{ $index }}_image_preview" class="mb-2">
+                                            @if($option->option_image)
                                                 <img src="{{ asset('storage/'.$option->option_image) }}" class="max-w-xs">
-                                            </div>
-                                        @endif
-                                        <input type="file" name="options[{{ $index }}][image]" accept="image/*"
+                                            @endif
+                                        </div>
+                                        <input type="file" name="options[{{ $index }}][image]" id="options_{{ $index }}_image" accept="image/*"
                                             class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
                                     </div>
                                 </div>
@@ -108,4 +108,8 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script src="{{ asset('js/image-paste.js') }}"></script>
+    @endpush
 </x-app-layout> 
